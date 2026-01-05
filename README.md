@@ -15,7 +15,7 @@ The benchmark was structured into seven distinct phases to ensure an "apples-to-
 - **Step 2:** Staging Change Simulation I built staging tables containing four discrete batches of data. These batches were designed to simulate real-world volatility, ranging from heavy volume (thousands of changes in all 3 tables) in batches 001 & 002 to light volume (minor updates in just customerstable) on batches 003 & 004. Staging tables had the exact same data on both platforms to make sure each platform performed the exact same DML operations in each run.
 
 - **Step 3:** Initial Pipeline Build The initial "Cold Start" of the Bronze, Silver, and Gold layers. This phase performs a full refresh of all nine tables (three per layer) to establish the baseline state before incremental changes are applied.
-  - ### Bronze layer:
+  - **Bronze layer:**
     This layer is identical as the RAW set of table which mimic CDC changes of source and lands it on the platform. No modifications are made to tables using basic CTAS queries. Here is an example. Note code is identical on both Snowflake & Databricks
 ```sql
 CREATE OR REPLACE DYNAMIC TABLE BRONZE_CUSTOMER
@@ -35,7 +35,7 @@ SELECT
 FROM RAW.RAW_CUSTOMER
 WHERE C_CUSTKEY IS NOT NULL
 ```
-  - ### Silver layer: 
+  - **Silver layer:** 
     This layer is replicates the bronze layer tables but also performs data clean up & adds additional columns for business metrics & dimensions to be later used by the gold layer. Silver layer does not perform any table joins but simply enriches the existing bronze tables.
 
 ```sql
@@ -63,9 +63,9 @@ SELECT
   END AS ACCOUNT_BALANCE_TIER
 FROM BRONZE.BRONZE_CUSTOMER
 ```
-  - ### Gold layer:
+  - **Gold layer:**
     This layer is what the business will end up using for BI & Analytics. It joins various tables from silver layer to build three different aggregate level reporting tables.
-    ```sql
+```sql
 CREATE OR REPLACE DYNAMIC TABLE GOLD_DAILY_SALES_SUMMARY
 TARGET_LAG = '1 minute'
 REFRESH_MODE = INCREMENTAL 
@@ -103,7 +103,8 @@ GROUP BY
   o.O_ORDERDATE, o.ORDER_YEAR, o.ORDER_QUARTER, o.ORDER_MONTH, 
   o.ORDER_DAY_OF_WEEK, o.O_ORDERSTATUS, o.ORDER_STATUS_DESC
 ```
-- **Steps 4 to 7:** Incremental Simulation Cycles A Python notebook executes four data batches. Between each batch, the system pauses for 180 seconds to simulate a standard production CDC (Change Data Capture) interval. This allowed me to measure how efficiently each platform identified and processed incremental changes.
+- **Steps 4 to 7:**
+  Incremental Simulation Cycles A Python notebook executes four data batches. Between each batch, the system pauses for 180 seconds to simulate a standard production CDC (Change Data Capture) interval. This allowed me to measure how efficiently each platform identified and processed incremental changes.
 
 # Snowflake Setup
 - Import the [Snowflake notebook](https://github.com/NickAkincilar/Snowflake-Dynamic-Tables-vs-Databrick-DLTs/blob/main/source_files/Snowflake_DynamicTables_Benchmark.ipynb) in to new workspaces and start running each cell.
