@@ -2,7 +2,7 @@
 Comparative Analysis: Snowflake Dynamic Tables (DT) vs. Databricks Declarative Pipelines (Delta Live Tables, DLTs)
 
 # Snowflake 
-- Import the Snowflake notebook into new workspaces and start running each cell.
+- Import the [Snowflake notebook](https://github.com/NickAkincilar/Snowflake-Dynamic-Tables-vs-Databrick-DLTs/blob/main/source_files/Snowflake_DynamicTables_Benchmark.ipynb) in to new workspaces and start running each cell.
 - To disable the Dynamic table refreshes, you can manually disable the refresh for 3 GOLD layer tables which trigger refreshes for the rest of the downstream tables.
 
 # Databricks:
