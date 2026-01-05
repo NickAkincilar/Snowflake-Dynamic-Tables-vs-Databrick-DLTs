@@ -140,5 +140,38 @@ GROUP BY
 - To disable the Dynamic table refreshes, you can manually disable the refresh for 3 GOLD layer tables which trigger refreshes for the rest of the downstream tables.
 
 # Databricks Setup
-- Stany tuned. I am trying to find a way to package the DLT pipeline so it can be deployed from a notebook.
+- Stay tuned. I am trying to find a way to package the DLT pipeline so it can be deployed from a notebook. In the mean time, if you want to replicate manually, the code is exactly the same.
+
+Here is an example of how one table is defined in Databricks:
+```sql
+
+CREATE OR REPLACE MATERIALIZED VIEW my_unity_catalog.dlt_test.SILVER_CUSTOMER
+TBLPROPERTIES (
+  'delta.enableDeletionVectors' = 'true',
+  'delta.enableRowTracking' = 'true',
+  'delta.enableChangeDataFeed' = 'true'
+)
+AS
+SELECT
+  C_CUSTKEY,
+  UPPER(TRIM(C_NAME)) AS C_NAME,
+  TRIM(C_ADDRESS) AS C_ADDRESS,
+  C_NATIONKEY,
+  REGEXP_REPLACE(C_PHONE, '[^0-9-]', '') AS C_PHONE,
+  C_ACCTBAL,
+  UPPER(TRIM(C_MKTSEGMENT)) AS C_MKTSEGMENT,
+  TRIM(C_COMMENT) AS C_COMMENT,
+  CASE 
+    WHEN C_ACCTBAL < 0 THEN 'NEGATIVE'
+    WHEN C_ACCTBAL = 0 THEN 'ZERO'
+    WHEN C_ACCTBAL BETWEEN 0 AND 1000 THEN 'LOW'
+    WHEN C_ACCTBAL BETWEEN 1000 AND 5000 THEN 'MEDIUM'
+    WHEN C_ACCTBAL BETWEEN 5000 AND 10000 THEN 'HIGH'
+    ELSE 'VERY_HIGH'
+  END AS ACCOUNT_BALANCE_TIER
+FROM my_unity_catalog.dlt_test.BRONZE_CUSTOMER;
+
+```
+
+
 
