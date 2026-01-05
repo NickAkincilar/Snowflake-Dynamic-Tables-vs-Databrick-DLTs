@@ -7,6 +7,31 @@ The goal of this test was to execute identical data pipelines without platform-s
 
 - Snowflake Dynamic Tables shared a single XS Gen2 warehouse with 20 second auto pause setting.
 
+# Results
+
+
+- ## Performance
+
+| Run Number | Databricks Execution Time | Snowflake Execution Time | Diff |
+| :--- | :--- | :--- | :--- |
+| **Full Refresh** | 374 | 146 | Snow 2.6X faster |
+| **1** | 123 | 100 | Snow 1.2% faster |
+| **2** | 123 | 101 | Snow 1.2X faster |
+| **3** | 73 | 37 | Snow 2X faster |
+| **4** | 83 | 38 | Snow 2.2X faster |
+| **5** | 6 | 30 | Not needed |
+| **Totals** | **839** | **422** | Snow 2X Faster |
+| **Totals** (incremental only) | **465** | **276** | Snow 1.7X Faster |
+
+
+- ## Cost
+| Category | Databricks | Snowflake Enterprise | Snowflake Standard | % Diff |
+| :--- | :--- | :--- | :--- | :--- |
+| **Including full refresh** | $1.64 | $0.49 | $0.32 | Snow 3X to 5X Cheaper |
+| **Incremental runs only** | $0.91 | $0.33 | $0.22 | Snow 3X to 4X Cheaper |
+
+
+
 # Test Methodology & Pipeline Design
 
 ![Test Architecture](https://cdn-images-1.medium.com/v2/resize:fit:2400/1*4hoeGll5NkxcE-f_quIb3g.png)
@@ -117,23 +142,3 @@ GROUP BY
 # Databricks Setup
 - Stany tuned. I am trying to find a way to package the DLT pipeline so it can be deployed from a notebook.
 
-# Results
-
-
-## Performance
-
-| Run Number | Databricks Execution Time | Snowflake Execution Time | Diff |
-| :--- | :--- | :--- | :--- |
-| **Full Refresh** | 374 | 146 | Snow 260% faster |
-| **1** | 123 | 100 | Snow 20% faster |
-| **2** | 123 | 101 | Snow 20% faster |
-| **3** | 73 | 37 | Snow 200% faster |
-| **4** | 83 | 38 | Snow 220% faster |
-| **5** | 6 | 30 | Not needed |
-
-
-## Cost
-| Category | Databricks | Snowflake Enterprise | Snowflake Standard | % Diff |
-| :--- | :--- | :--- | :--- | :--- |
-| **Including full refresh** | $1.64 | $0.49 | $0.32 | Snow 3X to 5X Cheaper |
-| **Incremental runs only** | $0.91 | $0.33 | $0.22 | Snow 3X to 4X Cheaper |
