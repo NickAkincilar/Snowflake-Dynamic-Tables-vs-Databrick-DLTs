@@ -6,7 +6,7 @@ The goal of this test was to execute identical data pipelines without platform-s
 - Databricks objects were built as part of a DLT Pipeline which was configured to run as a Job with Table triggers & Performance-mode enabled. Each refresh run was using Serverless Compute and performed incremental updates.
 
 - Snowflake Dynamic Tables shared a single XS Gen2 warehouse with 20 second auto pause setting.
-
+<br><br>
 # Results
 
 
@@ -30,6 +30,7 @@ The goal of this test was to execute identical data pipelines without platform-s
 | **Including full refresh** | $1.64 | $0.49 | $0.32 | Snow 3X to 5X Cheaper |
 | **Incremental runs only** | $0.91 | $0.33 | $0.22 | Snow 3X to 4X Cheaper |
 
+<br><br><br>
 
 
 # Test Methodology & Pipeline Design
@@ -37,7 +38,7 @@ The goal of this test was to execute identical data pipelines without platform-s
 ![Test Architecture](https://cdn-images-1.medium.com/v2/resize:fit:2400/1*4hoeGll5NkxcE-f_quIb3g.png)
 
 The benchmark was structured into seven distinct phases to ensure an "apples-to-apples" comparison, moving from raw data ingestion to complex business logic.
-
+<br><br>
 ## Step-by-Step Breakdown
 - **Step 1:** Raw Source Replication I created a raw landing zone using CTAS (Create Table As Select) queries to replicate the TPCH-SF10 tables. To eliminate data variance, tables were copied from Snowflake to Databricks as Delta tables, ensuring identical row counts and values. Data in these tables will later be updated during the simulation steps 4 to 7.
 
@@ -134,7 +135,7 @@ GROUP BY
 ```
 - **Steps 4 to 7:**
   Incremental Simulation Cycles A Python notebook executes four data batches. Between each batch, the system pauses for 180 seconds to simulate a standard production CDC (Change Data Capture) interval. This allows you to measure how efficiently each platform identified and processed incremental changes.
-
+<br><br>
 # Snowflake Setup
 - Import the [Snowflake notebook](https://github.com/NickAkincilar/Snowflake-Dynamic-Tables-vs-Databrick-DLTs/blob/main/source_files/Snowflake_DynamicTables_Benchmark.ipynb) in to new workspaces and start running each cell.
 - To disable the Dynamic table refreshes, you can manually disable the refresh for 3 GOLD layer tables which trigger refreshes for the rest of the downstream tables.
