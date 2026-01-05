@@ -142,6 +142,8 @@ GROUP BY
 # Databricks Setup
 - Stay tuned. I am trying to find a way to package the DLT pipeline so it can be deployed from a notebook. In the mean time, if you want to replicate manually, the code is exactly the same.
 
+- In the meantime, here is the [Declarative Pipeline folder](https://github.com/NickAkincilar/Snowflake-Dynamic-Tables-vs-Databrick-DLTs/tree/main/source_files/Databricks/TPCH_DLT_Test_DBX/transformations) that you can manually deploy. 
+
 Here is an example of how one table is defined in Databricks:
 ```sql
 
