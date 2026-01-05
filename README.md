@@ -15,7 +15,7 @@ The goal of this test was to execute identical data pipelines without platform-s
 | Run Number | Databricks Execution Time | Snowflake Execution Time | Diff |
 | :--- | :--- | :--- | :--- |
 | **Full Refresh** | 374 | 146 | Snow 2.6X faster |
-| **1** | 123 | 100 | Snow 1.2% faster |
+| **1** | 123 | 100 | Snow 1.2X faster |
 | **2** | 123 | 101 | Snow 1.2X faster |
 | **3** | 73 | 37 | Snow 2X faster |
 | **4** | 83 | 38 | Snow 2.2X faster |
