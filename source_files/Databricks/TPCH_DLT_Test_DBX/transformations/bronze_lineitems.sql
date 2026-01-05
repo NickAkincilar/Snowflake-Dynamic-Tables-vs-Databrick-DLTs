@@ -1,0 +1,27 @@
+CREATE OR REPLACE MATERIALIZED VIEW my_uc_catalog.dlt_test.BRONZE_LINEITEM
+TBLPROPERTIES (
+  'delta.enableDeletionVectors' = 'true',
+  'delta.enableRowTracking' = 'true',
+  'delta.enableChangeDataFeed' = 'true'
+)
+AS
+SELECT
+  L_ORDERKEY,
+  L_PARTKEY,
+  L_SUPPKEY,
+  L_LINENUMBER,
+  L_QUANTITY,
+  L_EXTENDEDPRICE,
+  L_DISCOUNT,
+  L_TAX,
+  L_RETURNFLAG,
+  L_LINESTATUS,
+  L_SHIPDATE,
+  L_COMMITDATE,
+  L_RECEIPTDATE,
+  L_SHIPINSTRUCT,
+  L_SHIPMODE,
+  L_COMMENT
+FROM my_uc_catalog.dlt_test.RAW_LINEITEM
+WHERE L_ORDERKEY IS NOT NULL AND L_LINENUMBER IS NOT NULL;
+
