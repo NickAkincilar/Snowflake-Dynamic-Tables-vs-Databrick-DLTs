@@ -19,7 +19,7 @@ The goal of this test was to execute identical data pipelines without platform-s
 | **2** | 123 | 101 | Snow 1.2X faster |
 | **3** | 73 | 37 | Snow 2X faster |
 | **4** | 83 | 38 | Snow 2.2X faster |
-| **5** | 6 | 30 | Not needed |
+| **5** | 63 | 0 | Snow did not run this nnnecessary job |
 | **Totals** | **839** | **422** | Snow 2X Faster |
 | **Totals** (incremental only) | **465** | **276** | Snow 1.7X Faster |
 
