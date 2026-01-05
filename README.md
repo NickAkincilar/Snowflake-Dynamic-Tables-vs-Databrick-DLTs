@@ -1,7 +1,9 @@
 # Snowflake-Dynamic-Tables-vs-Databrick-DLTs
 Comparative Analysis: Snowflake Dynamic Tables (DT) vs. Databricks Declarative Pipelines (Delta Live Tables, DLTs)
 
-The goal of this test was to execute identical data pipelines without platform-specific "tuning" that could bias the results. This benchmark utilizes the standard TPCH-SF10 dataset (with a 600M row lineitem table) to ensure the test is repeatable and transparent.
+The goal of this test was to execute identical data pipelines without platform-specific "tuning" that could bias the results. This benchmark utilizes the standard TPCH-SF10 dataset (with a 600M row lineitem table) to ensure the test is repeatable and transparent. I used the exact same set of tables with identical rows, with identical CDC changes & code for each platform to make things aples-to-apples with no code enhancements or changes to alter results.
+
+Databricks objects were built as part of a DLT Pipeline which was configured to run a Job that used Table triggers. Each refresh was incremental.
 
 # Test Methodology & Pipeline Design
 
@@ -104,7 +106,7 @@ GROUP BY
   o.ORDER_DAY_OF_WEEK, o.O_ORDERSTATUS, o.ORDER_STATUS_DESC
 ```
 - **Steps 4 to 7:**
-  Incremental Simulation Cycles A Python notebook executes four data batches. Between each batch, the system pauses for 180 seconds to simulate a standard production CDC (Change Data Capture) interval. This allowed me to measure how efficiently each platform identified and processed incremental changes.
+  Incremental Simulation Cycles A Python notebook executes four data batches. Between each batch, the system pauses for 180 seconds to simulate a standard production CDC (Change Data Capture) interval. This allows you to measure how efficiently each platform identified and processed incremental changes.
 
 # Snowflake Setup
 - Import the [Snowflake notebook](https://github.com/NickAkincilar/Snowflake-Dynamic-Tables-vs-Databrick-DLTs/blob/main/source_files/Snowflake_DynamicTables_Benchmark.ipynb) in to new workspaces and start running each cell.
